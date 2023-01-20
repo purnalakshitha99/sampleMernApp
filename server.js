@@ -25,6 +25,13 @@ const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("Mongodb Connection success!");
 });
+http://localhost:8070/student
+const studentRouter = require("./routes/Students.js");  //students kiyala hada file eka student router kiyana ekata dagannwa
+
+app.use("/student",studentRouter);
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number: ${PORT}`);
