@@ -52,16 +52,50 @@ router.route("/update/:id").put(async (req, res) => {
 
   const update = await Student.findByIdAndUpdate(userId, updateStudent)
     .then(() => {
-      ////uda eken update karpu value tika adala userId ekata danwa //await eken wenne  uda 'async' eken request(promiz) eka update karala response eka denakapn inn eka   //dan methana id ekata find kare api mokak hari wistharayak hoyanne wena ekakin nam 'findonce'  //update student eke thiyenne update karann ona values tika
+      ////uda eken update karpu value tika adala userId ekata danwa //await eken wenne  uda 'async' eken request(promiz) eka update karala response eka denakapn inn eka   //dan methana id ekata find kare api mokak hari wistharayak hoyanne wena ekakin nam 'findonceandupdate'  //update student eke thiyenne update karann ona values tika
 
-      res.status(200).send({ status: "user updated", user: update });
+      res.status(200).send({ status: "user updated" });
     })
     .catch((err) => {
       console.log(err);
-      res.status(500).send({ status: "error with updating data" });
+      res
+        .status(500)
+        .send({ status: "error with updating data", error: err.message });
     });
 
   //   res.status(200).send({status:"user updated",user:update})  //response ekak yawanwa 200 kiyala ekiyanne success eth ekkama update karapu userwath pennwa //mekama thama uda json file ekak aran kareth
+});
+
+//delete
+router.route("/delete/:id").delete(async (req, res) => {
+  let userId = req.params.id;
+
+  await Student.findByIdAndDelete(userId)
+    .then(() => {
+      res.status(200).send({ status: "user deleted" });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res
+        .status(500)
+        .send({ status: "error with delete user", error: err.message });
+    });
+});
+
+//get one user details
+router.route("/get/:id").get(async (req, res) => {
+  let userId = req.params.id;
+
+  const user = await Student.findById(userId)
+    .then((student) => {
+      res.status(200).send({ status: "user fetched", student });
+    })
+    .catch((err) => {
+      console.log(err);
+      res
+        .status(500)
+        .send({ status: "error with get user", error: err.message });
+    });
 });
 
 module.exports = router;
