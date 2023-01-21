@@ -7,11 +7,13 @@ router.route("/add").post((req, res) => {
   const name = req.body.name;
   const age = Number(req.body.age);
   const gender = req.body.gender; //font end eken ewana data tika daganna variable hada gena ewata da gannwa
+  const address = req.body.address;
 
   const newStudent = new Student({
     name,
     age,
     gender, //udin gaththa data thuna object ekak hadal mekata dagannwa
+    address,
   });
 
   newStudent
@@ -24,14 +26,26 @@ router.route("/add").post((req, res) => {
     });
 });
 
-router.route("/").get((req, res) => {
-  //uda eken gaththa data tika aran font end ekata ywanne meken
+// router.route("/").get((req, res) => {
+//   //uda eken gaththa data tika aran font end ekata ywanne meken
+//   Student.find()
+//     .then((students) => {
+//       res.json(students);
+//     })
+//     .catch((err) => {
+//       console.log(err); //error ekak awoth pennnane meken
+//     });
+
+// });
+
+router.route("/").get(async (req, res) => {
   Student.find()
     .then((students) => {
-      res.json(students);
+      res.status(200).send({ status: "students", students });
     })
     .catch((err) => {
-      console.log(err); //error ekak awoth pennnane meken
+      console.log(err);
+      res.status(200).send({ status: "error found add", error: err.message });
     });
 });
 
@@ -41,13 +55,14 @@ router.route("/update/:id").put(async (req, res) => {
   //methana me 'async' use karanne api mokak hari illapuwa methananam mkkhri update karanna yaddi kalin kara kara hitapu eka natara karanne nathuwa aluth ekath karanwa ek nisa thama 'async'use karanne //ethakota chache wenne na
   let userId = req.params.id; //'params' kiyanne backend request eke paramiter ekak lesa ena id eka, ganna   //e  ena id eka thama use id ekata da ganne
 
-  const { name, age, gender } = req.body; //font eken update wela ena data tika gannwa destructor walin
+  const { name, age, gender, address } = req.body; //font eken update wela ena data tika gannwa destructor walin
 
   const updateStudent = {
     //update karapu values tika me constant ekata dagnnwa
     name,
     age,
     gender,
+    address,
   };
 
   const update = await Student.findByIdAndUpdate(userId, updateStudent)
