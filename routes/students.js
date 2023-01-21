@@ -47,7 +47,7 @@ router.route("/").get(async (req, res) => {
       console.log(err);
       res.status(200).send({ status: "error found add", error: err.message });
     });
-});
+}); //uda comment karala thiyana ekama wena widihakata
 
 //http//localhost:8070/student/update/5fsadfsad43afsad
 //update
