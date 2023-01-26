@@ -8,12 +8,14 @@ router.route("/add").post((req, res) => {
   const age = Number(req.body.age);
   const gender = req.body.gender; //font end eken ewana data tika daganna variable hada gena ewata da gannwa
   const address = req.body.address;
+  const marks = Number(req.body.marks);
 
   const newStudent = new Student({
     name,
     age,
     gender, //udin gaththa data thuna object ekak hadal mekata dagannwa
     address,
+    marks,
   });
 
   newStudent
@@ -27,7 +29,7 @@ router.route("/add").post((req, res) => {
 });
 
 // router.route("/").get((req, res) => {
-//   //uda eken gaththa data tika aran font end ekata ywanne meken
+//   //uda eken gaththa data tika aran front end ekata ywanne meken
 //   Student.find()
 //     .then((students) => {
 //       res.json(students);
@@ -55,7 +57,7 @@ router.route("/update/:id").put(async (req, res) => {
   //methana me 'async' use karanne api mokak hari illapuwa methananam mkkhri update karanna yaddi kalin kara kara hitapu eka natara karanne nathuwa aluth ekath karanwa ek nisa thama 'async'use karanne //ethakota chache wenne na
   let userId = req.params.id; //'params' kiyanne backend request eke paramiter ekak lesa ena id eka, ganna   //e  ena id eka thama use id ekata da ganne
 
-  const { name, age, gender, address } = req.body; //font eken update wela ena data tika gannwa destructor walin
+  const { name, age, gender, address, marks } = req.body; //font eken update wela ena data tika gannwa destructor walin
 
   const updateStudent = {
     //update karapu values tika me constant ekata dagnnwa
@@ -63,6 +65,7 @@ router.route("/update/:id").put(async (req, res) => {
     age,
     gender,
     address,
+    marks,
   };
 
   const update = await Student.findByIdAndUpdate(userId, updateStudent)
